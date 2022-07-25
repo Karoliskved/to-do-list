@@ -1,9 +1,9 @@
 
-const Task = (title, description, dueDate, priority) =>{
+const Task = (title, description, dueDate, priority) => {
     const getTitle = () => title;
-    const getDescription =() => description;
-    const getDueDate =() => dueDate;
-    const getPriority =()=> priority;
-    return {getTitle, getDescription, getDueDate, getPriority}
+    const getDescription = () => description;
+    const getDueDate = () => dueDate;
+    const getPriority = () => priority;
+    return { getTitle, getDescription, getDueDate, getPriority }
 }
-export  default Task
+export default Task
