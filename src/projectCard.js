@@ -1,5 +1,5 @@
 import displayTasks from "./displayTasks"
-import handleProjectClick from "."
+import { handleProjectClick } from "."
 export default function displayProjects(projectList, container){
     while (container.firstChild) {
         container.firstChild.remove()

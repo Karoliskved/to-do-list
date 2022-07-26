@@ -25,12 +25,15 @@ const inputTitleProj = document.querySelector('#inputTitleProj')
 const task1 = Task('get food', 'get food for dog', '2022-05-05', 'urgent')
 const task2 = Task('get stuff', 'get stuff for me', '2022-05-06', 'non- urgent')
 const task3 = Task('get code', 'get code for me', '2022-05-07', 'non- urgent', 'school')
+const task4 = Task('get code', 'get code for me', '2022-05-07', 'non- urgent', 'school')
+console.log(task1.getID())
+console.log(task2.getID())
+console.log(task3.getID())
+console.log(task4.getID())
 //console.log(task1.getDescription())
 let taskArray = [task1, task2, task3]
 const projectArray = ProjectList(['test', 'default', 'testing', 'school'])
 //console.log(projectArray.getProjects())
-
-
 addButton.addEventListener('click', () => {
 
     formContainer.hidden = !formContainer.hidden
@@ -48,6 +51,7 @@ submitButton.addEventListener('click', () => {
 })
 newProjectButton.addEventListener('click', () => {
     formContainerProj.hidden = !formContainerProj.hidden;
+    console.log(taskArray)
 })
 submitButtonProj.addEventListener('click', () => {
     formContainerProj.hidden = true
@@ -62,10 +66,18 @@ submitButtonProj.addEventListener('click', () => {
 projectsContainer.appendChild(displayProjects(projectArray, projectsContainer))
 
 
-export default function handleProjectClick(e){
+ function handleProjectClick(e){
     console.log('test')
     while (container.firstChild) {
         container.firstChild.remove()
     }
     displayTasks(taskArray, e.textContent)
 }
+ function handleDelete(index){
+    console.log(index)
+    console.log(taskArray.findIndex(item => item.getID()==index))
+    taskArray.splice(taskArray.findIndex(item => item.getID()==index), 1)
+    console.log(taskArray)
+}
+
+export{handleProjectClick, handleDelete}

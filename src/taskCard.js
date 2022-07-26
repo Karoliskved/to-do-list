@@ -1,8 +1,9 @@
-
+import { handleDelete} from "."
 import createDiv from "./createDiv";
 export default function createCard(task){
     const card=document.createElement('div')
     card.classList.add('card');
+    card.id='card'+task.getID()
     const title=createDiv("Title", task);
     const description=createDiv("Description", task);
     const dueDate=createDiv("DueDate", task);
@@ -14,6 +15,11 @@ export default function createCard(task){
     const button=document.createElement('button');
     button.classList.add('delButton');
     button.textContent='delete';
+    button.id=task.getID()
+    button.addEventListener('click', ()=>{
+        handleDelete(button.id)
+       document.querySelector('#card'+button.id).remove()
+    })
     card.appendChild(title);
     card.appendChild(description);
     card.appendChild(dueDate);
