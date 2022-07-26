@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,26 @@
     <title>Document</title>
 
 </head>
+
 <body>
-    <div id="container" ></div>
+    <div id="container"></div>
+
+    <button class="formButton">new task</button>
+
+    <form  id="newTask">
+        <div class="formContainer" hidden>
+            <label for="inputTitle">title</label><input id="inputTitle">
+            <label for="inputDesc">description</label><input id="inputDesc">
+            <label for="inputDate">Due date</label><input id="inputDate" type="date">
+            <input id="urgency" name='urgency' type="radio" value="low"><label for="urgency">non-urgent</label>
+            <input id="urgency" name='urgency' type="radio" value="mid"><label for="urgency">mildly urgent</label>
+            <input id="urgency" name='urgency' type="radio" value="high"><label for="urgency">highly urgent</label>
+            <button class='submitButton' type="button">submit</button>
+        </div>
+    </form>
+
     <script src="main.js"></script>
-    
+
 </body>
+
 </html>
