@@ -8,7 +8,12 @@ export function createCard(task) {
     const check = document.createElement('input');
     check.classList.add("checkmark");
     check.type = 'checkbox';
+    if(task.getStatus()){
+        card.classList.add('completed')
+        check.checked=true;
+    }
     check.onchange = () => {
+        task.changeStatus();
         if (check.checked) {
             card.classList.add('completed')
         }
