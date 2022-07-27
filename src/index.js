@@ -71,9 +71,15 @@ newProjectButton.addEventListener('click', () => {
 submitButtonProj.addEventListener('click', () => {
     formContainerProj.hidden = true
     console.log(inputTitleProj.value)
-    projectArray.addProject(inputTitleProj.value)
+    if(projectArray.getProjects().find(e=> e==inputTitleProj.value)==undefined){
+        projectArray.addProject(inputTitleProj.value)
     inputTitleProj.value = ""
-    projectsContainer.appendChild(displayProjects(projectArray, projectsContainer))
+    projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
+    }
+    else{
+        alert('project already exists')
+    }
+    
 
 }
 
@@ -81,7 +87,7 @@ submitButtonProj.addEventListener('click', () => {
 allTasks.addEventListener('click', () => {
     handleProjectClick(allTasks)
 })
-projectsContainer.appendChild(displayProjects(projectArray, projectsContainer))
+projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
 
 
 function handleProjectClick(e) {
