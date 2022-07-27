@@ -1,0 +1,21 @@
+body{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+.sidebar{
+    background-color: rgb(56, 161, 199);
+    color: white;
+}
+#container>div{
+    display: flex;
+    flex-direction: column;
+}
+.card{
+    border: 1px solid black;
+    display: flex;
+    gap: 5px;
+}
+.cardLarge{
+    border: 1px solid black;
+}

@@ -10,34 +10,36 @@
 </head>
 
 <body>
-    <div id="container"></div>
+    
 
-    <button class="formButton">new task</button>
-
-    <form  id="newTask">
-        <div class="formContainer" hidden>
-            <label for="inputTitle">title</label><input id="inputTitle" required>
-            <label for="inputDesc">description</label><input id="inputDesc">
-            <label for="inputDate">Due date</label><input id="inputDate" type="date" required>
-            <label for="inputProj">Project</label><input id="inputProj">
-            <input id="urgency" name='urgency' type="radio" value="low"><label for="urgency">non-urgent</label>
-            <input id="urgency" name='urgency' type="radio" value="mid"><label for="urgency">mildly urgent</label>
-            <input id="urgency" name='urgency' type="radio" value="high"><label for="urgency">highly urgent</label>
-            <button class='submitButton' type="button">submit</button>
+    <div class="sidebar">
+        <button class="formButton">new task</button>
+        <form  id="newTask">
+            <div class="formContainer" hidden>
+                <label for="inputTitle">title</label><input id="inputTitle" required>
+                <label for="inputDesc">description</label><input id="inputDesc">
+                <label for="inputDate">Due date</label><input id="inputDate" type="date" required>
+                <label for="inputProj">Project</label><input id="inputProj">
+                <input id="urgency" name='urgency' type="radio" value="low"><label for="urgency">non-urgent</label>
+                <input id="urgency" name='urgency' type="radio" value="mid"><label for="urgency">mildly urgent</label>
+                <input id="urgency" name='urgency' type="radio" value="high"><label for="urgency">highly urgent</label>
+                <button class='submitButton' type="button">submit</button>
+            </div>
+        </form>
+        <div id="allTasks">all tasks</div>
+        <div>this week</div>
+        <div>this month</div>
+        <div class="projectsContainer">
         </div>
-    </form>
-    <div id="allTasks">all tasks</div>
-    <div>this week</div>
-    <div>this month</div>
-    <div class="projectsContainer">
+        <button class="newProjButton">new project</button>
+        <div class="projFormContainer" hidden>
+            <label for="inputTitleProj">title</label><input id="inputTitleProj" required>
+            <button class='submitButtonProj' type="button">submit</button>
+        </div>
     </div>
-    <button class="newProjButton">new project</button>
-    <div class="projFormContainer" hidden>
-        <label for="inputTitleProj">title</label><input id="inputTitleProj" required>
-        <button class='submitButtonProj' type="button">submit</button>
-    </div>
+    <div id="container"></div>
     <script src="main.js"></script>
-
+    
 </body>
 
 </html>

@@ -65,13 +65,12 @@ submitButtonProj.addEventListener('click', () => {
 
 )
 allTasks.addEventListener('click', ()=>{
-    displayTasks(taskArray)
+    handleProjectClick(allTasks)
 })
 projectsContainer.appendChild(displayProjects(projectArray, projectsContainer))
 
 
  function handleProjectClick(e){
-    console.log('test')
     while (container.firstChild) {
         container.firstChild.remove()
     }

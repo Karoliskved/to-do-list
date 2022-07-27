@@ -1,7 +1,7 @@
 import createCard from "./taskCard";
-export default function displayTasks(tasks, project='none'){
+export default function displayTasks(tasks, project='all tasks'){
   let found=[]
-  if(project=='none'){
+  if(project=='all tasks'){
     found=tasks;
   }
   else{
@@ -9,6 +9,7 @@ export default function displayTasks(tasks, project='none'){
   }
   const container = document.querySelector('#container');
   const cardContainer=document.createElement('div');
+  cardContainer.id='cardContainer';
   found.forEach(e => {
     cardContainer.appendChild(createCard(e));
   });
