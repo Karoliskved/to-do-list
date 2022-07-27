@@ -1,4 +1,4 @@
-import { handleDelete } from "."
+import { handleDelete, edit } from "."
 import createDiv from "./createDiv";
 import createCardLarge from "./taskCardLarge";
 export function createCard(task) {
@@ -15,19 +15,26 @@ export function createCard(task) {
         else{
             card.classList.remove('completed')
         }
-        
     }
-    /*  const button=document.createElement('button');
-      button.classList.add('delButton');
-      button.textContent='delete';
-      button.id=task.getID()
-      button.addEventListener('click', ()=>{
-          handleDelete(button.id)
-         document.querySelector('#card'+button.id).remove()
-      })*/
+    const button=document.createElement('button');
+    button.classList.add('delButton');
+    button.textContent='delete';
+    button.id=task.getID()
+    button.addEventListener('click', ()=>{
+        handleDelete(button.id)
+       document.querySelector('#card'+button.id).remove()
+    })
+    const editButton=document.createElement('button');
+    editButton.classList.add('editButton');
+    editButton.textContent='edit';
+    editButton.id=task.getID()
+    editButton.addEventListener('click', ()=>{
+        edit(editButton.id) 
+    })
     card.appendChild(createSmallClickable(task))
     card.appendChild(check);
-    // card.appendChild(button);
+    card.appendChild(editButton)
+    card.appendChild(button)
     return card;
 }
 export function createSmallClickable(task) {

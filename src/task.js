@@ -18,10 +18,26 @@ const Task = (title, description, dueDate, priority, project='default') => {
     const getPriority = () => priority;
     const getStatus = () => status;
     const getProject=()=>project;
+    const setTitle = (newTitle) =>{
+        title=newTitle;
+    };
+    const setDescription = (newDescription) => {
+        description=newDescription
+    };
+    const setDueDate = (newDate) => {
+        dueDate=newDate
+    };
+    const setPriority = (newPriority) => {
+        priority=newPriority
+    };
+    const setProject=(newProject)=>{
+        project=newProject;
+    };
     const getID=()=>id;
     const changeStatus=()=>{
         status=!status
     }
-    return { getTitle, getDescription, getDueDate, getPriority, getStatus, getProject, getID, changeStatus }
+    return { getTitle, getDescription, getDueDate, getPriority, getStatus, getProject, getID, changeStatus,
+         setDescription, setDueDate, setPriority, setProject, setTitle }
 }
 export default Task
