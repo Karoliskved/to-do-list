@@ -19,3 +19,7 @@ body{
 .cardLarge{
     border: 1px solid black;
 }
+.completed{
+    border: 1px solid lightgray;
+    color: grey
+}

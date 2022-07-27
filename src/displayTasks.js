@@ -1,4 +1,4 @@
-import createCard from "./taskCard";
+import {createCard} from "./taskCard";
 export default function displayTasks(tasks, project='all tasks'){
   let found=[]
   if(project=='all tasks'){

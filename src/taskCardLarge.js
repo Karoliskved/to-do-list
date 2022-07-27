@@ -1,23 +1,18 @@
 import { handleDelete} from "."
 import createDiv from "./createDiv";
-import createCard from "./taskCard";
+import {createSmallClickable} from "./taskCard";
 export default function createCardLarge(task){
-    const card=document.createElement('div')
+
     const clickContainer=document.createElement('div')
-    card.classList.add('cardLarge');
-    card.id='card'+task.getID()
     clickContainer.addEventListener('click', ()=>{
-        const newCard=createCard(task)
-        card.parentElement.replaceChild(newCard, card)
+        const newCard=createSmallClickable(task)
+        clickContainer.parentElement.replaceChild(newCard, clickContainer)
     })
     const title=createDiv("Title", task);
     const description=createDiv("Description", task);
     const dueDate=createDiv("DueDate", task);
     const priority=createDiv("Priority", task);
     const project=createDiv('Project', task);
-    const check=document.createElement('input');
-    check.classList.add("checkmark");
-    check.type='checkbox';
     const button=document.createElement('button');
     button.classList.add('delButton');
     button.textContent='delete';
@@ -31,9 +26,7 @@ export default function createCardLarge(task){
     clickContainer.appendChild(dueDate);
     clickContainer.appendChild(priority);
     clickContainer.appendChild(project);
-    card.appendChild(clickContainer);
-    card.appendChild(check);
-    card.appendChild(button);
-    return card;
+    clickContainer.appendChild(button);
+    return clickContainer;
 }
 
