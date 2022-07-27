@@ -20,6 +20,7 @@ const newProjectButton = document.querySelector('.newProjButton')
 const formContainerProj = document.querySelector('.projFormContainer')
 const submitButtonProj = document.querySelector('.submitButtonProj')
 const inputTitleProj = document.querySelector('#inputTitleProj')
+const allTasks = document.querySelector('#allTasks')
 
 //console.log('test')
 const task1 = Task('get food', 'get food for dog', '2022-05-05', 'urgent')
@@ -63,6 +64,9 @@ submitButtonProj.addEventListener('click', () => {
 }
 
 )
+allTasks.addEventListener('click', ()=>{
+    displayTasks(taskArray)
+})
 projectsContainer.appendChild(displayProjects(projectArray, projectsContainer))
 
 
