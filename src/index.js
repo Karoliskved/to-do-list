@@ -26,16 +26,16 @@ let currentProject;
 //console.log('test')
 const task1 = Task('get food', 'get food for dog', '2022-07-28', 'high')
 const task2 = Task('get stuff', 'get stuff for me', '2022-07-31', 'low')
-const task3 = Task('get code', 'get code for me', '2022-07-25', 'low', 'school')
+const task3 = Task('get code', 'get code for me', '2022-07-24', 'low', 'school')
 const task4 = Task('get code', 'get code for me', '2022-07-01', 'non-urgent', 'school')
 const submitButton = document.createElement('button')
 submitButton.classList.add('submitButton')
 submitButton.textContent = 'submit';
 submitButton.type = 'button'
-const editButton = document.createElement('button')
-editButton.classList.add('editButton')
-editButton.textContent = 'edit';
-editButton.type = 'button'
+/*const confirmEditButton = document.createElement('button')
+confirmEditButton.classList.add('confirmEditButton')
+confirmEditButton.textContent = 'edit';
+confirmEditButton.type = 'button'*/
 
 //console.log(task1.getDescription())
 let taskArray = [task1, task2, task3]
@@ -47,7 +47,7 @@ addButton.addEventListener('click', () => {
     inputDate.value = "";
     inputProj.value = "";
     document.querySelectorAll('#urgency').forEach(element => element.checked = false);
-    editButton.remove()
+
     formContainer.hidden = !formContainer.hidden
     formContainer.appendChild(submitButton)
 
@@ -130,11 +130,14 @@ function handleDelete(index) {
     //console.log(taskArray)
 }
 function edit(index) {
-    formContainer.appendChild(editButton)
+    const confirmEditButton = document.createElement('button')
+    confirmEditButton.classList.add('confirmEditButton')
+    confirmEditButton.textContent = 'edit';
+    confirmEditButton.type = 'button'
+    formContainer.appendChild(confirmEditButton)
     submitButton.remove()
     formContainer.hidden = !formContainer.hidden
-    const elementIndex = taskArray.findIndex(item => item.getID() == index)
-
+    let elementIndex = taskArray.findIndex(item => item.getID() == index)
     inputTitle.value = taskArray[elementIndex].getTitle();
     inputDesc.value = taskArray[elementIndex].getDescription();
     inputDate.value = taskArray[elementIndex].getDueDate();
@@ -148,17 +151,27 @@ function edit(index) {
     // taskArray[elementIndex].setTitle('new title yo')
     const card = document.querySelector('#card' + index)
     // card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
-    editButton.addEventListener('click', () => {
+    function handleEdit(){
         formContainer.hidden = true
         submitButton.remove()
         taskArray[elementIndex] = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
+ 
         //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
         while (container.firstChild) {
             container.firstChild.remove()
         }
+        /*console.log(taskArray[0].getID())
+        console.log(taskArray[1].getID())
+        console.log(taskArray[2].getID())*/
+        console.log(elementIndex)
         displayTasks(taskArray, currentProject)
-
-    })
+        confirmEditButton.remove()
+       /* console.log(taskArray[0].getID())
+        console.log(taskArray[1].getID())
+        console.log(taskArray[2].getID())
+        console.log('test2')*/
+    }
+    confirmEditButton.addEventListener('click', handleEdit)
 }
 
 export { handleProjectClick, handleDelete, edit }
