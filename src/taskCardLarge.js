@@ -10,13 +10,11 @@ export default function createCardLarge(task){
     const title=createDiv("Title", task);
     const description=createDiv("Description", task);
     const dueDate=createDiv("DueDate", task);
-    const priority=createDiv("Priority", task);
     const project=createDiv('Project', task);
    
     clickContainer.appendChild(title);
     clickContainer.appendChild(description);
     clickContainer.appendChild(dueDate);
-    clickContainer.appendChild(priority);
     clickContainer.appendChild(project);
 
     return clickContainer;

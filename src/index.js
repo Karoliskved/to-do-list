@@ -5,7 +5,7 @@ import { createCard } from './taskCard.js'
 import './style.css'
 import displayProjects from './projectCard.js'
 import displayTasks from './displayTasks.js'
-
+import { isThisMonth, isThisWeek, parse, parseISO, format } from 'date-fns'
 const container = document.querySelector('#container');
 const formContainer = document.querySelector('.formContainer');
 const inputTitle = document.querySelector('#inputTitle');
@@ -20,12 +20,14 @@ const formContainerProj = document.querySelector('.projFormContainer')
 const inputTitleProj = document.querySelector('#inputTitleProj')
 const submitButtonProj = document.querySelector('.submitButtonProj');
 const allTasks = document.querySelector('#allTasks')
+const thisWeek = document.querySelector('#thisWeek')
+const thisMonth = document.querySelector('#thisMonth')
 let currentProject;
 //console.log('test')
-const task1 = Task('get food', 'get food for dog', '2022-05-05', 'highly urgent')
-const task2 = Task('get stuff', 'get stuff for me', '2022-05-06', 'non-urgent')
-const task3 = Task('get code', 'get code for me', '2022-05-07', 'non-urgent', 'school')
-const task4 = Task('get code', 'get code for me', '2022-05-07', 'non-urgent', 'school')
+const task1 = Task('get food', 'get food for dog', '2022-07-28', 'high')
+const task2 = Task('get stuff', 'get stuff for me', '2022-07-31', 'low')
+const task3 = Task('get code', 'get code for me', '2022-07-25', 'low', 'school')
+const task4 = Task('get code', 'get code for me', '2022-07-01', 'non-urgent', 'school')
 const submitButton = document.createElement('button')
 submitButton.classList.add('submitButton')
 submitButton.textContent = 'submit';
@@ -74,21 +76,42 @@ newProjectButton.addEventListener('click', () => {
 submitButtonProj.addEventListener('click', () => {
     formContainerProj.hidden = true
     console.log(inputTitleProj.value)
-    if(projectArray.getProjects().find(e=> e==inputTitleProj.value)==undefined){
+    if (projectArray.getProjects().find(e => e == inputTitleProj.value) == undefined) {
         projectArray.addProject(inputTitleProj.value)
-    inputTitleProj.value = ""
-    projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
+        inputTitleProj.value = ""
+        projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
     }
-    else{
+    else {
         alert('project already exists')
     }
-    
+
 
 }
 
 )
 allTasks.addEventListener('click', () => {
     handleProjectClick(allTasks)
+})
+thisWeek.addEventListener('click', () => {
+    // console.log("test")
+    while (container.firstChild) {
+        container.firstChild.remove()
+    }
+    currentProject = thisWeek.textContent
+    console.log(currentProject)
+    displayTasks(taskArray, currentProject)
+//console.log(thisWeekArray)
+
+})
+thisMonth.addEventListener('click', () => {
+    // console.log("test")
+    while (container.firstChild) {
+        container.firstChild.remove()
+    }
+    //console.log(thisMonthArray)
+    currentProject = thisMonth.textContent
+    displayTasks(taskArray, currentProject)
+    
 })
 projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
 
@@ -98,7 +121,7 @@ function handleProjectClick(e) {
         container.firstChild.remove()
     }
     displayTasks(taskArray, e.textContent)
-    currentProject=e.textContent
+    currentProject = e.textContent
 }
 function handleDelete(index) {
     // console.log(index)
@@ -109,32 +132,33 @@ function handleDelete(index) {
 function edit(index) {
     formContainer.appendChild(editButton)
     submitButton.remove()
-    formContainer.hidden = !formContainer.hidden 
+    formContainer.hidden = !formContainer.hidden
     const elementIndex = taskArray.findIndex(item => item.getID() == index)
-    
+
     inputTitle.value = taskArray[elementIndex].getTitle();
     inputDesc.value = taskArray[elementIndex].getDescription();
     inputDate.value = taskArray[elementIndex].getDueDate();
     inputProj.value = taskArray[elementIndex].getProject();
-    currentProject = taskArray[elementIndex].getProject();
-    document.querySelectorAll('#urgency').forEach( e =>{
-        if(e.value==taskArray[elementIndex].getPriority())
-            e.checked=true;
+    document.querySelectorAll('#urgency').forEach(e => {
+        if (e.value == taskArray[elementIndex].getPriority()) {
+            e.checked = true;
+        }
+
     });
     // taskArray[elementIndex].setTitle('new title yo')
     const card = document.querySelector('#card' + index)
-   // card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
-   editButton.addEventListener('click', () => {
-    formContainer.hidden = true
-    submitButton.remove()
-    taskArray[elementIndex] = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
-    //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
-    while (container.firstChild) {
-        container.firstChild.remove()
-    }
-    displayTasks(taskArray, currentProject)
+    // card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+    editButton.addEventListener('click', () => {
+        formContainer.hidden = true
+        submitButton.remove()
+        taskArray[elementIndex] = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
+        //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+        while (container.firstChild) {
+            container.firstChild.remove()
+        }
+        displayTasks(taskArray, currentProject)
 
-})
+    })
 }
 
 export { handleProjectClick, handleDelete, edit }

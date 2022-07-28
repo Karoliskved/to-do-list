@@ -23,3 +23,12 @@ body{
     border: 1px solid lightgray;
     color: grey
 }
+.low{
+    border: solid 1px green;
+}
+.medium{
+    border: solid 1px orange;
+}
+.high{
+    border: solid 1px red;
+}

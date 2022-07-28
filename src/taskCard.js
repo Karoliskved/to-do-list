@@ -36,6 +36,7 @@ export function createCard(task) {
     editButton.addEventListener('click', ()=>{
         edit(editButton.id) 
     })
+    card.classList.add(task.getPriority())
     card.appendChild(createSmallClickable(task))
     card.appendChild(check);
     card.appendChild(editButton)
@@ -52,10 +53,8 @@ export function createSmallClickable(task) {
     clickContainer.classList.add('clickContainer')
     const title = createDiv("Title", task);
     const dueDate = createDiv("DueDate", task);
-    const priority = createDiv("Priority", task);
     clickContainer.appendChild(title);
     clickContainer.appendChild(dueDate);
-    clickContainer.appendChild(priority);
     return clickContainer
 
 }
