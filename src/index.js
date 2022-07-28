@@ -20,7 +20,7 @@ const formContainerProj = document.querySelector('.projFormContainer')
 const inputTitleProj = document.querySelector('#inputTitleProj')
 const submitButtonProj = document.querySelector('.submitButtonProj');
 const allTasks = document.querySelector('#allTasks')
-
+let currentProject;
 //console.log('test')
 const task1 = Task('get food', 'get food for dog', '2022-05-05', 'highly urgent')
 const task2 = Task('get stuff', 'get stuff for me', '2022-05-06', 'non-urgent')
@@ -60,7 +60,10 @@ submitButton.addEventListener('click', () => {
     inputDate.value = "";
     inputProj.value = "";
     document.querySelectorAll('#urgency').forEach(element => element.checked = false);
-
+    while (container.firstChild) {
+        container.firstChild.remove()
+    }
+    displayTasks(taskArray, currentProject)
 
 })
 
@@ -95,6 +98,7 @@ function handleProjectClick(e) {
         container.firstChild.remove()
     }
     displayTasks(taskArray, e.textContent)
+    currentProject=e.textContent
 }
 function handleDelete(index) {
     // console.log(index)
@@ -107,10 +111,12 @@ function edit(index) {
     submitButton.remove()
     formContainer.hidden = !formContainer.hidden 
     const elementIndex = taskArray.findIndex(item => item.getID() == index)
+    
     inputTitle.value = taskArray[elementIndex].getTitle();
     inputDesc.value = taskArray[elementIndex].getDescription();
     inputDate.value = taskArray[elementIndex].getDueDate();
     inputProj.value = taskArray[elementIndex].getProject();
+    currentProject = taskArray[elementIndex].getProject();
     document.querySelectorAll('#urgency').forEach( e =>{
         if(e.value==taskArray[elementIndex].getPriority())
             e.checked=true;
@@ -122,7 +128,11 @@ function edit(index) {
     formContainer.hidden = true
     submitButton.remove()
     taskArray[elementIndex] = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
-    card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+    //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+    while (container.firstChild) {
+        container.firstChild.remove()
+    }
+    displayTasks(taskArray, currentProject)
 
 })
 }

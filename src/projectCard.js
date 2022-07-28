@@ -19,7 +19,6 @@ export default function displayProjects(projectList, container, input){
         option.value=e;
         option.textContent=e;
         card.appendChild(div)
-        //console.log(option.value)
          input.appendChild(option)
     });
    
