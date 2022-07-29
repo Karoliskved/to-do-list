@@ -47,6 +47,7 @@ taskArray=convertToTaskArray(objectStorage)
 //console.log(typeof taskArray)
 const projectArray = ProjectList(['test', 'default', 'testing', 'school'])
 //console.log(projectArray.getProjects())
+handleProjectClick(allTasks)
 addButton.addEventListener('click', () => {
     inputTitle.value = "";
     inputDesc.value = "";
@@ -119,8 +120,8 @@ function handleProjectClick(e) {
     while (container.firstChild) {
         container.firstChild.remove()
     }
-    displayTasks(taskArray, e.textContent)
-    currentProject = e.textContent
+    displayTasks(taskArray, e.id)
+    currentProject = e.id
 }
 function handleDelete(index) {
     // console.log(index)
@@ -194,7 +195,6 @@ function edit(index) {
  function convertToTaskArray(taskCont){
     let array=[]
     taskCont.forEach(task =>{
-        console.log(taskCont.title)
         array.push(Task(task.title, task.description, task.dueDate, task.priority, task.project, task.status))
     })
     return array
@@ -204,11 +204,17 @@ function edit(index) {
 
 
  }
- function handleProjectRemove(index){
+ function handleProjectRemove(projectName){
     console.log('test2')
-    console.log(projectArray.getProjects())
-    console.log(index)
-    projectArray.removeProject(index)
-    console.log(projectArray.getProjects())
+    console.log(taskArray.length)
+    console.log(projectName)
+   taskArray= taskArray.filter(e => e.getProject() != projectName);
+   console.log(taskArray.length)
+   while (container.firstChild) {
+    container.firstChild.remove()
+}
+    displayTasks(taskArray, currentProject)
+   localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
+   
  }
 export { handleProjectClick, handleDelete, edit, saveCheck, handleProjectRemove }

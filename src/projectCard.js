@@ -16,22 +16,28 @@ export default function displayProjects(projectList, container, input){
         
         div.classList.add('projectTitle')
         div.id=projectList.getProject(i);
-        div.textContent=projectList.getProject(i);
-        div.addEventListener('click', ()=>handleProjectClick(div))
+        const divName=document.createElement('div')
+        divName.id=projectList.getProject(i);
+        divName.textContent=projectList.getProject(i);
+        divName.addEventListener('click', ()=>handleProjectClick(divName))
+        const option=document.createElement('option')
+        option.value=projectList.getProject(i);
+        option.textContent=projectList.getProject(i);
         const projDeleteButton=document.createElement('button')
         projDeleteButton.textContent='delete'
         projDeleteButton.classList.add('projDeleteButton')
         projDeleteButton.addEventListener('click', ()=>{
-            projectList.removeProject(i)
+            handleProjectRemove(projectList.getProject(i))
+            projectList.removeProject(i)          
             div.remove()
+            option.remove()
             
         })
-        const option=document.createElement('option')
-        option.value=projectList.getProject(i);
-        option.textContent=projectList.getProject(i);
+        div.appendChild(divName)
         div.appendChild(projDeleteButton)
         card.appendChild(div)
-         input.appendChild(option)
+        //card.appendChild(projDeleteButton)
+        input.appendChild(option)
 
     
     }
