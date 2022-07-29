@@ -1,4 +1,4 @@
-import { handleDelete, edit } from "."
+import { handleDelete, edit, saveCheck } from "."
 import createDiv from "./createDiv";
 import createCardLarge from "./taskCardLarge";
 export function createCard(task) {
@@ -14,6 +14,7 @@ export function createCard(task) {
     }
     check.onchange = () => {
         task.changeStatus();
+        saveCheck();
         if (check.checked) {
             card.classList.add('completed')
         }

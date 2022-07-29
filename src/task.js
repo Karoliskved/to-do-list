@@ -8,9 +8,8 @@ function hashCode(string){
     return hash;
 }
 let counter=0;
-const Task = (title, description, dueDate, priority, project='default') => {
+const Task = (title, description, dueDate, priority, project='default', status=false) => {
     counter++;
-    let status=false;
     const id=hashCode(title+description+dueDate+priority+project+counter+status)
     const getTitle = () => title;
     const getDescription = () => description;

@@ -24,7 +24,7 @@ const thisWeek = document.querySelector('#thisWeek')
 const thisMonth = document.querySelector('#thisMonth')
 let currentProject;
 //console.log('test')
-const task1 = Task('get food', 'get food for dog', '2022-07-28', 'high')
+const task1 = [Task('get food', 'get food for dog', '2022-07-28', 'high')]
 const task2 = Task('get stuff', 'get stuff for me', '2022-07-31', 'low')
 const task3 = Task('get code', 'get code for me', '2022-07-24', 'low', 'school')
 const task4 = Task('get code', 'get code for me', '2022-07-01', 'non-urgent', 'school')
@@ -32,13 +32,19 @@ const submitButton = document.createElement('button')
 submitButton.classList.add('submitButton')
 submitButton.textContent = 'submit';
 submitButton.type = 'button'
-/*const confirmEditButton = document.createElement('button')
-confirmEditButton.classList.add('confirmEditButton')
-confirmEditButton.textContent = 'edit';
-confirmEditButton.type = 'button'*/
-
+let taskArray=[/*task1, task2, task3, task4*/]
 //console.log(task1.getDescription())
-let taskArray = [task1, task2, task3]
+//const testarray=[]
+//localStorage.setItem('taskArray', JSON.stringify(testarray))
+const taskArrayForStorage=[]
+if(!localStorage.getItem('taskArray')){
+    localStorage.setItem('taskArray', JSON.stringify(convertToExportable(task1)))
+}
+let objectStorage = JSON.parse(localStorage.getItem('taskArray') || "[]")
+console.log(objectStorage.length)
+
+taskArray=convertToTaskArray(objectStorage)
+//console.log(typeof taskArray)
 const projectArray = ProjectList(['test', 'default', 'testing', 'school'])
 //console.log(projectArray.getProjects())
 addButton.addEventListener('click', () => {
@@ -57,11 +63,7 @@ submitButton.addEventListener('click', () => {
     formContainer.hidden = true
     const newTask = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
     taskArray.push(newTask)
-    inputTitle.value = "";
-    inputDesc.value = "";
-    inputDate.value = "";
-    inputProj.value = "";
-    document.querySelectorAll('#urgency').forEach(element => element.checked = false);
+    localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
     while (container.firstChild) {
         container.firstChild.remove()
     }
@@ -84,8 +86,6 @@ submitButtonProj.addEventListener('click', () => {
     else {
         alert('project already exists')
     }
-
-
 }
 
 )
@@ -128,6 +128,8 @@ function handleDelete(index) {
     console.log(taskArray.findIndex(item => item.getID() == index))
     taskArray.splice(taskArray.findIndex(item => item.getID() == index), 1)
     //console.log(taskArray)
+    localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
+
 }
 function edit(index) {
     const confirmEditButton = document.createElement('button')
@@ -146,7 +148,6 @@ function edit(index) {
         if (e.value == taskArray[elementIndex].getPriority()) {
             e.checked = true;
         }
-
     });
     // taskArray[elementIndex].setTitle('new title yo')
     const card = document.querySelector('#card' + index)
@@ -155,7 +156,8 @@ function edit(index) {
         formContainer.hidden = true
         submitButton.remove()
         taskArray[elementIndex] = Task(inputTitle.value, inputDesc.value, inputDate.value, taskForm.elements['urgency'].value, inputProj.value)
- 
+        localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
+
         //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
         while (container.firstChild) {
             container.firstChild.remove()
@@ -171,7 +173,36 @@ function edit(index) {
         console.log(taskArray[2].getID())
         console.log('test2')*/
     }
+
     confirmEditButton.addEventListener('click', handleEdit)
 }
+ function convertToExportable(tasks){
+    const taskArrayForStorage=[]
+    tasks.forEach(task=>{
+    const taskConverter =new Object()
+    taskConverter.title=task.getTitle()
+    taskConverter.description=task.getDescription()
+    taskConverter.dueDate=task.getDueDate()
+    taskConverter.priority=task.getPriority()
+    taskConverter.project=task.getProject()
+    taskConverter.status=task.getStatus()
+    taskArrayForStorage.push(taskConverter)
+    })
 
-export { handleProjectClick, handleDelete, edit }
+    return taskArrayForStorage
+
+ }
+ function convertToTaskArray(taskCont){
+    let array=[]
+    taskCont.forEach(task =>{
+        console.log(taskCont.title)
+        array.push(Task(task.title, task.description, task.dueDate, task.priority, task.project, task.status))
+    })
+    return array
+ }
+ function saveCheck(){
+    localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
+
+
+ }
+export { handleProjectClick, handleDelete, edit, saveCheck }
