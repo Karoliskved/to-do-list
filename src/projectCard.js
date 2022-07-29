@@ -31,6 +31,8 @@ export default function displayProjects(projectList, container, input){
             projectList.removeProject(i)          
             div.remove()
             option.remove()
+            localStorage.setItem('projectArray', JSON.stringify(projectList.getProjects()))
+
             
         })
         div.appendChild(divName)

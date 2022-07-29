@@ -36,16 +36,19 @@ let taskArray=[/*task1, task2, task3, task4*/]
 //console.log(task1.getDescription())
 //const testarray=[]
 //localStorage.setItem('taskArray', JSON.stringify(testarray))
-const taskArrayForStorage=[]
+const projectArrayOnFirstLoad = ProjectList(['default', 'school'])
+//localStorage.clear()
 if(!localStorage.getItem('taskArray')){
     localStorage.setItem('taskArray', JSON.stringify(convertToExportable(task1)))
+    localStorage.setItem('projectArray', JSON.stringify(projectArrayOnFirstLoad.getProjects()))
+
 }
 let objectStorage = JSON.parse(localStorage.getItem('taskArray') || "[]")
 console.log(objectStorage.length)
-
 taskArray=convertToTaskArray(objectStorage)
+const projectArray=ProjectList(JSON.parse(localStorage.getItem('projectArray')))
+console.log(projectArray.getProjects())
 //console.log(typeof taskArray)
-const projectArray = ProjectList(['test', 'default', 'testing', 'school'])
 //console.log(projectArray.getProjects())
 handleProjectClick(allTasks)
 addButton.addEventListener('click', () => {
@@ -82,6 +85,8 @@ submitButtonProj.addEventListener('click', () => {
         projectArray.addProject(inputTitleProj.value)
         inputTitleProj.value = ""
         projectsContainer.appendChild(displayProjects(projectArray, projectsContainer, inputProj))
+        localStorage.setItem('projectArray', JSON.stringify(projectArray.getProjects()))
+
     }
     else {
         alert('project already exists')
@@ -215,6 +220,6 @@ function edit(index) {
 }
     displayTasks(taskArray, currentProject)
    localStorage.setItem('taskArray', JSON.stringify(convertToExportable(taskArray)))
-   
+
  }
 export { handleProjectClick, handleDelete, edit, saveCheck, handleProjectRemove }
