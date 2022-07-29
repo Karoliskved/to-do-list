@@ -73,7 +73,6 @@ submitButton.addEventListener('click', () => {
 
 newProjectButton.addEventListener('click', () => {
     formContainerProj.hidden = !formContainerProj.hidden;
-    console.log(taskArray)
 })
 submitButtonProj.addEventListener('click', () => {
     formContainerProj.hidden = true
@@ -205,4 +204,11 @@ function edit(index) {
 
 
  }
-export { handleProjectClick, handleDelete, edit, saveCheck }
+ function handleProjectRemove(index){
+    console.log('test2')
+    console.log(projectArray.getProjects())
+    console.log(index)
+    projectArray.removeProject(index)
+    console.log(projectArray.getProjects())
+ }
+export { handleProjectClick, handleDelete, edit, saveCheck, handleProjectRemove }
