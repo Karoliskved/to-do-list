@@ -6,11 +6,12 @@ export default function displayTasks(tasks, project = 'all tasks') {
   if (project == 'allTasks') {
     found = tasks;
   }
-  else if (project == 'thisWeek') {
+  else if (project == 'this week') {
     tasks.forEach(e => {
      // const date = new Date(parseISO(e.getDueDate(), 'yyyy-MM-dd'))
-      if (isThisWeek(date, { weekStartsOn: 1 })) {
+      if (isThisWeek(parseISO(e.getDueDate()), { weekStartsOn: 1 })) {
         found.push(e)
+  
         //console.log(parse(e.getDueDate(), 'yyyy-MM-dd', new Date()))
       }
     })
