@@ -6,6 +6,7 @@ import './style.css';
 import displayProjects from './projectCard.js';
 import displayTasks from './displayTasks.js';
 import { isThisMonth, isThisWeek, parse, parseISO, format } from 'date-fns';
+//select dom elements
 const container = document.querySelector('#container');
 const formContainer = document.querySelector('.formContainer');
 const inputTitle = document.querySelector('#inputTitle');
@@ -23,23 +24,8 @@ const allTasks = document.querySelector('#allTasks');
 const thisWeek = document.querySelector('#thisWeek');
 const thisMonth = document.querySelector('#thisMonth');
 let currentProject;
-//console.log('test')
+
 const task1 = [Task('get food', 'get food for dog', '2022-07-28', 'high')];
-const task2 = Task('get stuff', 'get stuff for me', '2022-07-31', 'low');
-const task3 = Task(
-  'get code',
-  'get code for me',
-  '2022-07-24',
-  'low',
-  'school'
-);
-const task4 = Task(
-  'get code',
-  'get code for me',
-  '2022-07-01',
-  'non-urgent',
-  'school'
-);
 const submitButton = document.createElement('button');
 submitButton.classList.add('submitButton');
 submitButton.textContent = 'submit';
@@ -48,14 +34,11 @@ const confirmEditButton = document.createElement('button');
 confirmEditButton.classList.add('confirmEditButton');
 confirmEditButton.textContent = 'edit';
 confirmEditButton.type = 'button';
-let taskArray = [
-  /*task1, task2, task3, task4*/
-];
-//console.log(task1.getDescription())
-//const testarray=[]
-//localStorage.setItem('taskArray', JSON.stringify(testarray))
+let taskArray = [];
+
 const projectArrayOnFirstLoad = ProjectList(['default', 'school']);
 //localStorage.clear();
+//setup starting projects and tasks into local storage if local storage is empty
 if (!localStorage.getItem('taskArray')) {
   localStorage.setItem('taskArray', JSON.stringify(convertToExportable(task1)));
   localStorage.setItem(
@@ -63,17 +46,16 @@ if (!localStorage.getItem('taskArray')) {
     JSON.stringify(projectArrayOnFirstLoad.getProjects())
   );
 }
+// get projects and tasks from local storage
 let objectStorage = JSON.parse(localStorage.getItem('taskArray') || '[]');
-console.log(objectStorage.length);
 taskArray = convertToTaskArray(objectStorage);
-console.log(taskArray[0].getTitle());
 const projectArray = ProjectList(
   JSON.parse(localStorage.getItem('projectArray'))
 );
-console.log(projectArray.getProjects());
-//console.log(typeof taskArray)
-//console.log(projectArray.getProjects())
+
 handleProjectClick(allTasks);
+
+// show form when clicking on new task
 addButton.addEventListener('click', () => {
   inputTitle.value = '';
   inputDesc.value = '';
@@ -83,6 +65,7 @@ addButton.addEventListener('click', () => {
   formContainer.appendChild(submitButton);
   formContainer.hidden = !formContainer.hidden;
 });
+// get info from new task form
 submitButton.addEventListener('click', () => {
   formContainer.hidden = true;
   const newTask = Task(
@@ -93,22 +76,24 @@ submitButton.addEventListener('click', () => {
     inputProj.value
   );
   taskArray.push(newTask);
+  //save task to local storage
   localStorage.setItem(
     'taskArray',
     JSON.stringify(convertToExportable(taskArray))
   );
+  //redisplay tasks
   while (container.firstChild) {
     container.firstChild.remove();
   }
   displayTasks(taskArray, currentProject);
 });
-
+// show form when clicking new project
 newProjectButton.addEventListener('click', () => {
   formContainerProj.hidden = !formContainerProj.hidden;
 });
 submitButtonProj.addEventListener('click', () => {
   formContainerProj.hidden = true;
-  console.log(inputTitleProj.value);
+  //only allows unique projects
   if (
     projectArray.getProjects().find((e) => e == inputTitleProj.value) ==
     undefined
@@ -118,6 +103,7 @@ submitButtonProj.addEventListener('click', () => {
     projectsContainer.appendChild(
       displayProjects(projectArray, projectsContainer, inputProj)
     );
+    //save projects to local storage
     localStorage.setItem(
       'projectArray',
       JSON.stringify(projectArray.getProjects())
@@ -126,32 +112,33 @@ submitButtonProj.addEventListener('click', () => {
     alert('project already exists');
   }
 });
+
+//show all tasks when clicking on all tasks
 allTasks.addEventListener('click', () => {
   handleProjectClick(allTasks);
 });
+//show projects which are/were due on the current week
 thisWeek.addEventListener('click', () => {
-  // console.log("test")
   while (container.firstChild) {
     container.firstChild.remove();
   }
   currentProject = thisWeek.textContent;
-  console.log(currentProject);
   displayTasks(taskArray, currentProject);
-  //console.log(thisWeekArray)
 });
+//show projects which are/were due on the current month
 thisMonth.addEventListener('click', () => {
-  // console.log("test")
   while (container.firstChild) {
     container.firstChild.remove();
   }
-  //console.log(thisMonthArray)
   currentProject = thisMonth.textContent;
   displayTasks(taskArray, currentProject);
 });
+//display all available projects in the sidebar
 projectsContainer.appendChild(
   displayProjects(projectArray, projectsContainer, inputProj)
 );
 
+//display tasks based on project
 function handleProjectClick(e) {
   while (container.firstChild) {
     container.firstChild.remove();
@@ -159,24 +146,25 @@ function handleProjectClick(e) {
   displayTasks(taskArray, e.id);
   currentProject = e.id;
 }
+// delete task from taskArray and local storage
 function handleDelete(index) {
-  // console.log(index)
-  console.log(taskArray.findIndex((item) => item.getID() == index));
   taskArray.splice(
     taskArray.findIndex((item) => item.getID() == index),
     1
   );
-  //console.log(taskArray)
   localStorage.setItem(
     'taskArray',
     JSON.stringify(convertToExportable(taskArray))
   );
 }
+//edit existing task
 function edit(index) {
+  //remove unnecessary items from the form
   confirmEditButton.remove();
   formContainer.appendChild(confirmEditButton);
   submitButton.remove();
   formContainer.hidden = !formContainer.hidden;
+  //show current info in the form
   let elementIndex = taskArray.findIndex((item) => item.getID() == index);
   inputTitle.value = taskArray[elementIndex].getTitle();
   inputDesc.value = taskArray[elementIndex].getDescription();
@@ -187,9 +175,8 @@ function edit(index) {
       e.checked = true;
     }
   });
-  // taskArray[elementIndex].setTitle('new title yo')
   const card = document.querySelector('#card' + index);
-  // card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+  //take data from the form and save the task that was edited in task array
   function handleEdit() {
     formContainer.hidden = true;
     submitButton.remove();
@@ -204,25 +191,17 @@ function edit(index) {
       'taskArray',
       JSON.stringify(convertToExportable(taskArray))
     );
-
-    //card.parentElement.replaceChild(createCard(taskArray[elementIndex]), card)
+    //redisplay tasks
     while (container.firstChild) {
       container.firstChild.remove();
     }
-    /*console.log(taskArray[0].getID())
-        console.log(taskArray[1].getID())
-        console.log(taskArray[2].getID())*/
-    console.log(elementIndex);
     displayTasks(taskArray, currentProject);
     confirmEditButton.remove();
-    /* console.log(taskArray[0].getID())
-        console.log(taskArray[1].getID())
-        console.log(taskArray[2].getID())
-        console.log('test2')*/
   }
 
   confirmEditButton.addEventListener('click', handleEdit);
 }
+// convert task array into an object that can be saved in local storage
 function convertToExportable(tasks) {
   const taskArrayForStorage = [];
   tasks.forEach((task) => {
@@ -235,9 +214,10 @@ function convertToExportable(tasks) {
     taskConverter.status = task.getStatus();
     taskArrayForStorage.push(taskConverter);
   });
-
   return taskArrayForStorage;
 }
+// convert objects from local storage to task objects
+// this the way it is so we could get back Task methods which cant be saved in local storage
 function convertToTaskArray(taskCont) {
   let array = [];
   taskCont.forEach((task) => {
@@ -254,18 +234,17 @@ function convertToTaskArray(taskCont) {
   });
   return array;
 }
+//save task array to local storage when task status changes
 function saveCheck() {
   localStorage.setItem(
     'taskArray',
     JSON.stringify(convertToExportable(taskArray))
   );
 }
+//when a project is removed the app removes all tasks in that project
 function handleProjectRemove(projectName) {
-  console.log('test2');
-  console.log(taskArray.length);
-  console.log(projectName);
+  //keeps only tasks which are not in project which was removed
   taskArray = taskArray.filter((e) => e.getProject() != projectName);
-  console.log(taskArray.length);
   while (container.firstChild) {
     container.firstChild.remove();
   }
