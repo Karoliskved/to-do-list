@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+  </head>
 
-</head>
-
-<body>
-    
-
-    <div class="sidebar">
-        <button class="formButton">new task</button>
-        <form  id="newTask">
-            <div class="formContainer" hidden>
-                <label for="inputTitle">title</label><input id="inputTitle" required>
-                <label for="inputDesc">description</label><input id="inputDesc">
-                <label for="inputDate">Due date</label><input id="inputDate" type="date" required>
-                <label for="inputProj">Project</label><select id="inputProj">
-                    <option value="default">default</option>
-                
-                <input id="urgency" name='urgency' type="radio" value="low"><label for="urgency">non-urgent</label>
-                <input id="urgency" name='urgency' type="radio" value="medium"><label for="urgency">mildly urgent</label>
-                <input id="urgency" name='urgency' type="radio" value="high"><label for="urgency">highly urgent</label> 
-            </div>
-        </form>
+  <body>
+    <div class="header">TO-DO-LIST</div>
+    <div class="main">
+      <div class="sidebar">
         <div id="allTasks">all tasks</div>
         <div id="thisWeek">this week</div>
         <div id="thisMonth">this month</div>
-        <div class="projectsContainer">
-        </div>
+        <div class="projectsContainer"></div>
         <button class="newProjButton">new project</button>
         <div class="projFormContainer" hidden>
-            <label for="inputTitleProj">title</label><input id="inputTitleProj" required>
-            <button class='submitButtonProj' type="button">submit</button>
+          <div class="projInputContainer">
+            <label for="inputTitleProj">Title:</label
+            ><input id="inputTitleProj" required />
+          </div>
+          <button class="submitButtonProj" type="button">submit</button>
         </div>
+        <button class="formButton">new task</button>
+        <form id="newTask">
+          <div hidden class="formContainer">
+            <div>
+              <label for="inputTitle">Title:</label
+              ><input id="inputTitle" required />
+            </div>
+            <div>
+              <label for="inputDesc">Description:</label
+              ><textarea id="inputDesc"></textarea>
+            </div>
+            <div>
+              <label for="inputDate">Due date:</label
+              ><input id="inputDate" type="date" required />
+            </div>
+            <div>
+              <label for="inputProj">Project:</label
+              ><select id="inputProj">
+                <option value="default">default:</option>
+              </select>
+            </div>
+            <div>
+              <input
+                id="urgency"
+                name="urgency"
+                type="radio"
+                value="low"
+                checked
+              /><label for="urgency">non-urgent</label>
+            </div>
+            <div>
+              <input
+                id="urgency"
+                name="urgency"
+                type="radio"
+                value="medium"
+              /><label for="urgency">mildly urgent</label>
+            </div>
+            <div>
+              <input
+                id="urgency"
+                name="urgency"
+                type="radio"
+                value="high"
+              /><label for="urgency">highly urgent</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="container"></div>
     </div>
-    <div id="container"></div>
     <script src="main.js"></script>
-    
-</body>
-
+  </body>
 </html>
