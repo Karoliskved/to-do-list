@@ -1,34 +1,160 @@
-body{
-    display: flex;
-    width: 100vw;
-    height: 100vh;
+body {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  /*  height: 100vh;*/
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+  /*height: 100vh;*/
+  height: max-content;
+  min-height: 100vh;
+  /*overflow: scroll;*/
+  overflow: auto;
 }
-.sidebar{
-    background-color: rgb(56, 161, 199);
-    color: white;
+.header {
+  background-color: #0f172a;
+  display: flex;
+  justify-content: center;
 }
-#container>div{
-    display: flex;
-    flex-direction: column;
+.main {
+  display: flex;
+  height: 100%;
+  flex: 1;
+  background-color: #f8fafc;
 }
-.card{
-    border: 1px solid black;
-    display: flex;
-    gap: 5px;
+.sidebar {
+  background-color: #475569;
+  color: white;
+  width: max(15%, 150px);
+  font-size: 170%;
+  padding: 5px;
 }
-.cardLarge{
-    border: 1px solid black;
+#container {
+  display: flex;
+  /*justify-content: center;*/
+  flex: 1;
+  padding: 15px;
+  overflow: auto;
 }
-.completed{
-    border: 1px solid lightgray;
-    color: grey
+#container > div {
+  /*display: grid;
+  grid-template-columns: repeat(3, 1fr);*/
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  overflow: auto;
 }
-.low{
-    border: solid 1px green;
+
+.card {
+  border: 1px solid black;
+  display: flex;
+  gap: 5px;
+  width: 70%;
+  padding: 5px;
+  border-radius: 10px;
 }
-.medium{
-    border: solid 1px orange;
+.clickContainer {
+  display: flex;
+  width: 80%;
+  /*justify-content: space-between;*/
+  gap: 10px;
+  align-self: center;
 }
-.high{
-    border: solid 1px red;
+.clickContainerLarge {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 10px;
+  align-self: center;
+}
+.Title {
+  width: 25%;
+}
+.Project {
+  width: 25%;
+}
+.cardLarge {
+  border: 1px solid black;
+}
+.row {
+  display: flex;
+  gap: 20px;
+}
+.editButton {
+  height: 20px;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+.delButton {
+  height: 20px;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+.projDeleteButton {
+  height: 30px;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+}
+
+.low {
+  border: solid 1px green;
+}
+.medium {
+  border: solid 1px orange;
+}
+.high {
+  border: solid 1px red;
+}
+.projectTitle {
+  display: flex;
+}
+.completed {
+  border: 1px solid lightgray;
+  color: grey;
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 15px;
+}
+.formContainer > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.projFormContainer {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+}
+[hidden] {
+  display: none;
+}
+#inputTitle,
+#inputTitleProj {
+  width: 70%;
+  flex-grow: 4;
+}
+.projInputContainer {
+  display: flex;
+  gap: 10px;
+}
+button {
+  color: white;
+  font-size: 15px;
+  display: block;
+  border-radius: 10px;
+  background-color: #94a3b8;
+  border: 0px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
